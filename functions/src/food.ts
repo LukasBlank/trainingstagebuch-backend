@@ -28,7 +28,9 @@ async function getFoods(
     const docs = await admin.firestore().collection('food').get();
     const data: any[] = [];
     docs.forEach((doc) => {
-      data.push({ id: doc.id, data: doc.data() });
+      const docdata = doc.data();
+      docdata['id'] = doc.id;
+      data.push(docdata);
     });
     response.status(200).send(data);
   } catch (err) {
